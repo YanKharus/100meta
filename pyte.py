@@ -7,7 +7,7 @@ from PIL import Image
  #1000 config variables that can be changed 
 
 def OCR(folderPath: str, dataOutput, isLoop2=False, imagePath='./temp.png') -> None:  
-    if( not isLoop2 ):
+    """if( not isLoop2 ):
         imgData = pytesseract.image_to_string(Image.open(imagePath).convert("L"))
 
         with open(dataOutput, 'a') as dataFile:    # OCR is responsible for carrying temp to final folder
@@ -16,10 +16,18 @@ def OCR(folderPath: str, dataOutput, isLoop2=False, imagePath='./temp.png') -> N
         with Image.open(imagePath) as players:     
             players.save(folderPath)
     else:
+    """
+    imgData = pytesseract.image_to_string(Image.open(imagePath).convert("L"))
+
+    with open(dataOutput, 'a') as dataFile:    # OCR is responsible for carrying temp to final folder
+            dataFile.write(imgData)
+
+    with Image.open(imagePath) as players:     
+        players.save(folderPath)
         
 
 
-OCR('./images/test.png', './imgdata.txt') 
+OCR('./images/test.png', './imgdata.txt', imagePath='./unnamed.png') 
 
 """TODO both folderpath where player SS and dataoutput where text output will be saved
  should be handled by pyautogui when it calls OCR because it will also handle folder structure as well as 
