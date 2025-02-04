@@ -1,34 +1,68 @@
 import pytesseract
 from PIL import Image
+import cv2
+import os
+import subprocess
+
+
+def invertBlackWhiteImageOnly(Image: Image.Image):
+     
+     return Image.point(lambda z: 0 if z == 255 else 255)
 
 
  #psm 6 works just as well as default but essentially seems to be about the same 12 seems dog shit but usable and one other only oem 1 available
  #if further tests reveal accuracy is trash then read through increasing accuracy on some github somewhere and researching some of the
  #1000 config variables that can be changed 
 
-def OCR(folderPath: str, dataOutput, isLoop2=False, imagePath='./temp.png') -> None:  
-    """if( not isLoop2 ):
-        imgData = pytesseract.image_to_string(Image.open(imagePath).convert("L"))
+def OCR(playerRanksPath: str, playerInfoTxt: str,config, stagingRanksPath='./temp.png') -> None:  
+        
+        img = cv2.imread(stagingRanksPath, cv2.IMREAD_GRAYSCALE)
+        _, img = cv2.threshold(img, 120, 255, cv2.THRESH_BINARY)
 
-        with open(dataOutput, 'a') as dataFile:    # OCR is responsible for carrying temp to final folder
-            dataFile.write(imgData)
+        img_pil = Image.fromarray(img)
+        
+        img_pil = invertBlackWhiteImageOnly(img_pil)
 
-        with Image.open(imagePath) as players:     
-            players.save(folderPath)
-    else:
-    """
-    imgData = pytesseract.image_to_string(Image.open(imagePath).convert("L"))
+        img_pil.save(f"./images/{len(os.listdir('./images')) +1}.png")
 
-    with open(dataOutput, 'a') as dataFile:    # OCR is responsible for carrying temp to final folder
-            dataFile.write(imgData)
+    
+        imgData = F"{pytesseract.image_to_string(img_pil, config=config)} test parameters: {config}"
 
-    with Image.open(imagePath) as players:     
-        players.save(folderPath)
+        """ when debugging to check what pytesseract is *actually* looking at run this in cli with the 
+        pre-processed image because it wont have access to these functions
+        tesseract 12.png output --psm 6 -c tessedit_char_whitelist=0123456789/ -c tessedit_write_images=1 """
+
+        
+        print({len(os.listdir('./images')) +1})
+        print(f"./images/{len(os.listdir('./images')) +1}.png")
+             
+
         
 
+        with open(playerInfoTxt, 'a') as OCRtext:   
+            OCRtext.write(imgData)
 
-OCR('./images/test.png', './imgdata.txt', imagePath='./unnamed.png') 
+        with Image.open(stagingRanksPath) as players:      # OCR is responsible for carrying temp to final folder
+            players.save(playerRanksPath)
 
-"""TODO both folderpath where player SS and dataoutput where text output will be saved
- should be handled by pyautogui when it calls OCR because it will also handle folder structure as well as 
- maybe fix loop1 and loop2 logic"""
+
+moreconfigs= ["--psm 3 --oem 3 -c tessedit_char_whitelist=0123456789/",
+                  "--psm 4 --oem 3 -c tessedit_char_whitelist=0123456789/",
+                  "--psm 5 --oem 3 -c tessedit_char_whitelist=0123456789/",
+                  "--psm 6 --oem 3 -c tessedit_char_whitelist=0123456789/",
+                  "--psm 7 --oem 3 -c tessedit_char_whitelist=0123456789/",
+                  "--psm 8 --oem 3 -c tessedit_char_whitelist=0123456789/",
+                  "--psm 9 --oem 3 -c tessedit_char_whitelist=0123456789/",
+                  "--psm 10 --oem 3 -c tessedit_char_whitelist=0123456789/",
+                  "--psm 12 --oem 3 -c tessedit_char_whitelist=0123456789/"]
+
+config = '--psm 6 -c tessedit_char_whitelist=0123456789/'
+tests = ['./relevant tests/1modified.png']
+
+for test in tests:
+    OCR('./OCRimagesaving.png', './text.txt', config, stagingRanksPath=test)
+
+
+
+
+

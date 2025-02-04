@@ -1,0 +1,114 @@
+1 10 428 1825
+2 0 300 1773
+3 20 269 1616
+4 4 486 1609
+5 4 1 335 1583
+6 3 262 1575
+7 38 537 1573
+8 1 214 1566
+9 13 254 1554
+10224 370 1539   aside from the 11 thing the promotion number bled into the position number
+1 317 1538
+12 6 317 1526
+ test parameters: --psm 6 --oem 3 -c tessedit_char_whitelist=0123456789/13 391 1522
+
+14 145 1519       13 was skipped and 14 was given 13's numbers
+15 233 1508
+16 337 1505
+17 2302 252 1503
+18 3 155 1498
+19 367 1496
+20 4 228 1488
+21 338 1487
+22 492 1486
+2319 318 1483  positional promotion bleeding into rank number
+24 19 494 1480
+ test parameters: --psm 6 --oem 3 -c tessedit_char_whitelist=0123456789/25 344 1479
+26 378 1474
+27 170 1473
+28 132 1471
+290011 317 1467
+30 41 198 1439
+1 20 259 1436
+32 4 553 1421
+33 5 161 1401          similar stuff as above bleeding positional changes and missing numbers from rank number
+34 62 193 1373
+35 6 277 1359
+36 6 230 1347
+ test parameters: --psm 6 --oem 3 -c tessedit_char_whitelist=0123456789/1
+37 6 308 1341
+38 6 191 1329
+39 6 173 1328
+4010 303 1318
+1 4 299 1309
+4230 2 397 1306
+43 8 01 375 1303         same patterns as before but this time the number mismatch didnt occur
+44 4 230 1300            every time theres a number in front of 1 it disappears
+45 6 325 1292
+46 31 273 1289
+4712 291 1286
+48 4 374 1275
+ test parameters: --psm 6 --oem 3 -c tessedit_char_whitelist=0123456789/49 23 427 1266
+
+5019 464 1258        49 skipped
+51 5 327 1252
+52 20 227 1249
+53 208 387 1237
+54 7 30 351 1233
+55 2 258 1227
+56 398 1219
+5718 457 1217
+58 2 378 1216
+59 1 5 147 1209
+6010 463 1203
+ test parameters: --psm 6 --oem 3 -c tessedit_char_whitelist=0123456789/61 149 1181
+
+62 7 233 1174             kept own numbers 61 skipped
+6310 346 1173
+64 2 158 1172
+65 1 324 1165
+66 3 172 1163
+67 2 426 1158
+68 8 143 1158
+6915 260 1157
+70 3 357 1151
+3 319 1150
+72 9 173 1142
+ test parameters: --psm 6 --oem 3 -c tessedit_char_whitelist=0123456789/73 2 7 100 1142
+
+7 4 409 1128        kept own numbers 71 skipped
+7519 675 1127
+76 1 371 1126
+7778 631 1125          bleeding
+78 2 244 1120
+7917 166 1110
+80 2 363 1085
+81 4 251 1081
+82 5 506 1080
+83 3 347 1080
+84 5 131 1077
+ test parameters: --psm 6 --oem 3 -c tessedit_char_whitelist=0123456789/8531337 149 1075
+8642 300 1073     first line skipped
+87 7 193 1073
+88 1 345 1072
+1 0 177 1072          entire position deleted in front of a number 1 positional change
+90 9 101 1072
+7 342 1065            same as immediate above
+92 164 1063
+9312 280 1060
+94 242 1060
+9569 206 1060
+961260 242 1058
+ test parameters: --psm 6 --oem 3 -c tessedit_char_whitelist=0123456789/9779 286 1055
+9814 270 1053            97 skipped
+99 3 223 1048
+10030 320 1042
+ test parameters: --psm 6 --oem 3 -c tessedit_char_whitelist=0123456789/
+
+
+ I want to try adding a border and maybe line segments between each line. copying over letters over and over 
+ to trick OCR into not shooting itself in the foot. I feel like this isnt an issue of quality or noise.
+
+ in all actuality what I actually need is just the points and then ranking is also implicit so if I figure out how 
+ to stop the numbers from being skipped I can just take the lp and names and go. I lose overall player winrate 
+ but I can just use names and a separate function with riot api to figure that out as well.

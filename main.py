@@ -2,30 +2,40 @@ import mss
 import os.path
 from PIL import Image
 from pyte import OCR
+import pyautogui
+REFRESHX = 150
+REFRESHY = 150 # coordinates for where the refresh box is this is just a placeholder
+
+
+def refresh(REFRESHX, REFRESHY):
+    pyautogui.moveTo(REFRESHX, REFRESHY) #TODO find where coordinates are
+    pyautogui.click()
 
 def merge(im1: Image.Image, im2: Image.Image) -> Image.Image: # test function working with 21.png alter the values and standardize 
       w = (im1.size[0] + im2.size[0])
       h = max(im1.size[1], im2.size[1])
       z = Image.new("RGBA", (w, h))      # using PIL stuff to crop out the unneeded part from the image after mss takes the ss
-      z.paste(im2)                       # IF YOU ARE USING THIS FUNCTION THAT MEANS YOU SHOULD BE IN LOOP 1
+      z.paste(im2)                       
       z.paste(im1, (im2.size[0], 0))     
 
       return z
 
 def noiseCrop(tempImagePath='./temp.png') -> None:
     try:
-        with Image.open(tempImagePath) as z:       
-                debug = False                 # IF YOU ARE USING THIS FUNCTION THEN YOU SHOULD BE IN LOOP 1
-                region1 = (0, 0, 110, 700)
-                region2 = (160, 0, 1000, 700)    # default values most likely need to be changed
+        with Image.open(tempImagePath) as z:
+                print(z.size)
+                debug = False             
+                region1 = (0, 0, 60, 355)
+                region2 = (400, 0, 589, 355)    # these values are closer to correct
                 im1 = z.crop(region2)
                 im2 = z.crop(region1)
                 result = merge(im1, im2)         # this picks up the temp image saved by ss crops it and overwrites temp 
 
                 if(debug):
-                    print(merge(im1, im2).show())
+                    merge(im1, im2).show()
+                    return
 
-                result.save(tempImagePath) # OCR picks it up from here does what it needs and OCR will save to actual folder
+                result.save('./images/croptest.png') # OCR picks it up from here does what it needs and OCR will save to actual folder
     except OSError:
             print("something went wrong")
 
