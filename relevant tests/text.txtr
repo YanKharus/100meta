@@ -112,3 +112,5 @@
  in all actuality what I actually need is just the points and then ranking is also implicit so if I figure out how 
  to stop the numbers from being skipped I can just take the lp and names and go. I lose overall player winrate 
  but I can just use names and a separate function with riot api to figure that out as well.
+
+ 

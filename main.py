@@ -5,6 +5,9 @@ from pyte import OCR
 import pyautogui
 REFRESHX = 150
 REFRESHY = 150 # coordinates for where the refresh box is this is just a placeholder
+BUFFERXPOS = 120
+BUFFERYPOS = 40 # coordinates for paste function to paste the buffer thing 
+# will need to be changed after deciding what the standardized positions off ss's will be
 
 
 def refresh(REFRESHX, REFRESHY):
@@ -19,7 +22,7 @@ def merge(im1: Image.Image, im2: Image.Image) -> Image.Image: # test function wo
       z.paste(im1, (im2.size[0], 0))     
 
       return z
-
+# no longer being used
 def noiseCrop(tempImagePath='./temp.png') -> None:
     try:
         with Image.open(tempImagePath) as z:
@@ -38,7 +41,7 @@ def noiseCrop(tempImagePath='./temp.png') -> None:
                 result.save('./images/croptest.png') # OCR picks it up from here does what it needs and OCR will save to actual folder
     except OSError:
             print("something went wrong")
-
+# no longer being used
 
 def ss(folderPath: str, isLoop2: bool, tempFilePath='./temp.png' ) -> None:
 
@@ -57,3 +60,16 @@ def ss(folderPath: str, isLoop2: bool, tempFilePath='./temp.png' ) -> None:
             mss.tools.to_png(sct_img.rgb, sct_img.size, level=9, output=folderPath)  
         #TODO?   most likely leaving this up to wrapper function logic  ^^^^^^^^^^
 
+def line1BufferFiller(BUFFERXPOS, BUFFERYPOS, mainImage='./temp.png', bufferFiller='./images/line-1-filler-test.png'):
+    debug = False
+
+    mainImage = Image.open(mainImage)
+    bufferFiller = Image.open(bufferFiller)
+
+    mainImage.paste(bufferFiller, (BUFFERXPOS, BUFFERYPOS))
+    
+    if(debug):
+        mainImage.show()
+        print(mainImage.size)
+
+line1BufferFiller(BUFFERXPOS, BUFFERYPOS)

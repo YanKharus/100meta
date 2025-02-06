@@ -46,7 +46,7 @@
 51 5 327 1252
 52 20 227 1249
 53 28 387 1237
-54 7 30 351 1233
+54 7 30 351 1233    5 separate numbers with the extra coming from the name itself 
 55 2 258 1227
 56 398 1219
 87 18 457 1217
@@ -103,3 +103,11 @@
 10030 320 1042
  test parameters: --psm 6 -c tessedit_char_whitelist=0123456789/ 
 
+
+
+               on these modified tests there is a 0% chance of lines being skipped or rank points being missed
+               there is still variance with numbers in name or there being 3-5 numbers per entry however as previously
+               mentioned the only thing I actually care about at this point is the rank points because name is gotten
+               with 0% failure and positional ranking is implied. Still, 9 tests is not enough. I should turn on low
+               spec computer and start getting standardized screenshots to do tests on. if after 50 there is not a single
+               failure ill probably be happy with it.

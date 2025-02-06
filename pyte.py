@@ -26,15 +26,15 @@ def OCR(playerRanksPath: str, playerInfoTxt: str,config, stagingRanksPath='./tem
         img_pil.save(f"./images/{len(os.listdir('./images')) +1}.png")
 
     
-        imgData = F"{pytesseract.image_to_string(img_pil, config=config)} test parameters: {config}"
+        imgData = f"{pytesseract.image_to_string(img_pil, config=config)}\n\n"
 
         """ when debugging to check what pytesseract is *actually* looking at run this in cli with the 
         pre-processed image because it wont have access to these functions
         tesseract 12.png output --psm 6 -c tessedit_char_whitelist=0123456789/ -c tessedit_write_images=1 """
 
         
-        print({len(os.listdir('./images')) +1})
-        print(f"./images/{len(os.listdir('./images')) +1}.png")
+        #print({len(os.listdir('./images')) +1})
+        #print(f"./images/{len(os.listdir('./images')) +1}.png")
              
 
         
@@ -57,10 +57,17 @@ moreconfigs= ["--psm 3 --oem 3 -c tessedit_char_whitelist=0123456789/",
                   "--psm 12 --oem 3 -c tessedit_char_whitelist=0123456789/"]
 
 config = '--psm 6 -c tessedit_char_whitelist=0123456789/'
-tests = ['./relevant tests/1modified.png']
+tests = ['./modified relevant tests/1modified.png',
+         './modified relevant tests/2modified.png',
+         './modified relevant tests/3modified.png',
+         './modified relevant tests/4modified.png',
+         './modified relevant tests/5modified.png',
+         './modified relevant tests/6modified.png',
+         './modified relevant tests/7modified.png',
+         './modified relevant tests/8modified.png']
 
-for test in tests:
-    OCR('./OCRimagesaving.png', './text.txt', config, stagingRanksPath=test)
+#for test in tests:
+    #OCR('./OCRimagesaving.png', './text.txt', config, stagingRanksPath=test)
 
 
 
