@@ -1,17 +1,13 @@
 import mss
-import os.path
+import os
 from PIL import Image
-from pyte import OCR
 import pyautogui
-REFRESHX = 150
-REFRESHY = 150 # coordinates for where the refresh box is this is just a placeholder
-BUFFERXPOS = 120
-BUFFERYPOS = 40 # coordinates for paste function to paste the buffer thing 
-# will need to be changed after deciding what the standardized positions off ss's will be
 
 
-def refresh(REFRESHX, REFRESHY):
-    pyautogui.moveTo(REFRESHX, REFRESHY) #TODO find where coordinates are
+def refresh():
+    REFRESHX = 450
+    REFRESHY = 450
+    pyautogui.moveTo(REFRESHX, REFRESHY, 1) #TODO have it also click the leaderboard so the scrollbar is active
     pyautogui.click()
 
 def merge(im1: Image.Image, im2: Image.Image) -> Image.Image: # test function working with 21.png alter the values and standardize 
@@ -43,33 +39,51 @@ def noiseCrop(tempImagePath='./temp.png') -> None:
             print("something went wrong")
 # no longer being used
 
-def ss(folderPath: str, isLoop2: bool, tempFilePath='./temp.png' ) -> None:
+def ss(tempFilePath='./temp.png', isFinal=False ) -> None:
+    monitor = {"top": 380, "left": 190, "width": 720, "height": 500}
+    finalSSCoords = {}
 
- # all this needs to do is save to temp or save to tag folder dump
-    with mss.mss() as sct:
-        if (not isLoop2):
-            monitor = {"top": 380, "left": 150, "width": 1000, "height": 700}
+    if (isFinal == False):
 
-            # Grab the data
+        with mss.mss() as sct:                     #TODO test if changes work
             sct_img = sct.grab(monitor)
             mss.tools.to_png(sct_img.rgb, sct_img.size, level=9, output=tempFilePath) 
+    else: 
+         with mss.mss() as sct:
+            sct_img = sct.grab(finalSSCoords)
+            mss.tools.to_png(sct_img.rgb, sct_img.size, level=9, output=tempFilePath)
 
-        else:
-            monitor={} #TODO set values for catching the taglines
-            sct_img = sct.grab(monitor)
-            mss.tools.to_png(sct_img.rgb, sct_img.size, level=9, output=folderPath)  
-        #TODO?   most likely leaving this up to wrapper function logic  ^^^^^^^^^^
 
-def line1BufferFiller(BUFFERXPOS, BUFFERYPOS, mainImage='./temp.png', bufferFiller='./images/line-1-filler-test.png'):
-    debug = False
+def line1BufferFiller(mainImage='./temp.png', bufferFiller='./images/line-1-filler-test.png', isFinal=False):
+    bufferPosX = 125
+    bufferPosY = 55
+    finalSSPositionX = 1
+    finalSSPositionY = 1
+    debug = False               #TODO test if changes work this also needs to return or actually save something
+    if (isFinal == False):
+        mainImage = Image.open(mainImage)
+        bufferFiller = Image.open(bufferFiller)
+                        
+        mainImage.paste(bufferFiller, (bufferPosX, bufferPosY))
+    else:
+        mainImage = Image.open(mainImage)
+        bufferFiller = Image.open(bufferFiller)
+                            
+        mainImage.paste(bufferFiller, (finalSSPositionX, finalSSPositionY))
 
-    mainImage = Image.open(mainImage)
-    bufferFiller = Image.open(bufferFiller)
-
-    mainImage.paste(bufferFiller, (BUFFERXPOS, BUFFERYPOS))
-    
     if(debug):
         mainImage.show()
         print(mainImage.size)
 
-line1BufferFiller(BUFFERXPOS, BUFFERYPOS)
+    mainImage.save(f'./2-6 modified tests/{len(os.listdir('./2-6 modified tests'))+1}.png')
+
+def scrollDown12Times():
+     for i in range(12):
+          pyautogui.press('down')
+
+
+#line1BufferFiller(BUFFERXPOS, BUFFERYPOS)
+#refresh(REFRESHX, REFRESHY)
+
+"""for i in os.listdir('./2-6 tests'):
+    line1BufferFiller(f'./2-6 tests/{i}')"""

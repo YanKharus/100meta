@@ -3,6 +3,7 @@ from PIL import Image
 import cv2
 import os
 import subprocess
+from main import line1BufferFiller #TODO remove this later and rethink structure
 
 
 def invertBlackWhiteImageOnly(Image: Image.Image):
@@ -36,9 +37,6 @@ def OCR(playerRanksPath: str, playerInfoTxt: str,config, stagingRanksPath='./tem
         #print({len(os.listdir('./images')) +1})
         #print(f"./images/{len(os.listdir('./images')) +1}.png")
              
-
-        
-
         with open(playerInfoTxt, 'a') as OCRtext:   
             OCRtext.write(imgData)
 
@@ -57,17 +55,12 @@ moreconfigs= ["--psm 3 --oem 3 -c tessedit_char_whitelist=0123456789/",
                   "--psm 12 --oem 3 -c tessedit_char_whitelist=0123456789/"]
 
 config = '--psm 6 -c tessedit_char_whitelist=0123456789/'
-tests = ['./modified relevant tests/1modified.png',
-         './modified relevant tests/2modified.png',
-         './modified relevant tests/3modified.png',
-         './modified relevant tests/4modified.png',
-         './modified relevant tests/5modified.png',
-         './modified relevant tests/6modified.png',
-         './modified relevant tests/7modified.png',
-         './modified relevant tests/8modified.png']
 
-#for test in tests:
-    #OCR('./OCRimagesaving.png', './text.txt', config, stagingRanksPath=test)
+for i in os.listdir('./2-6 modified tests'):
+     OCR('./OCRimagesaving.png', './text.txt', config, stagingRanksPath=f'./2-6 modified tests/{i}')
+
+
+    
 
 
 
