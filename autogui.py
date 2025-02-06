@@ -13,12 +13,33 @@ generating file structure
 making sure this makes sense when its a scheduled task
 
 """
-def capture():
-    clipboard_content = tkinter.Tk().clipboard_get()
-
-
-def mainLoop():
-    x=1
 
 
 
+
+
+def fullTagLineLoop():
+    def tagGet(namesToGet):
+        debug = 5 # set to 1 for normal speed or longer for slower
+        for i in range(namesToGet): 
+            pyautogui.moveTo(500, (i*50) + (400 if namesToGet == 11 else 800), duration=debug) # when getting last 4 names this will move the mouse    
+            pyautogui.click(button='right')                                    # to get them
+            pyautogui.move(30, 50, duration=debug) # relative movement
+            pyautogui.click()
+            pyautogui.moveTo(200, 500, duration=debug)
+            pyautogui.click()
+
+            clipboard_content = tkinter.Tk().clipboard_get()
+            with open('./names.txt', 'a') as nameFile:
+                nameFile.write(clipboard_content)
+
+            pyautogui.moveTo(600, 250, duration=debug)
+            pyautogui.click()
+        
+    for i in range(8):
+        tagGet(10) 
+    else:   # 11 names and 4 names
+        tagGet(3)
+
+
+fullTagLineLoop()

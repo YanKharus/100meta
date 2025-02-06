@@ -3,12 +3,10 @@ from PIL import Image
 import cv2
 import os
 import subprocess
-from main import line1BufferFiller #TODO remove this later and rethink structure
-
 
 def invertBlackWhiteImageOnly(Image: Image.Image):
      
-     return Image.point(lambda z: 0 if z == 255 else 255)
+    return Image.point(lambda z: 0 if z == 255 else 255)
 
 
  #psm 6 works just as well as default but essentially seems to be about the same 12 seems dog shit but usable and one other only oem 1 available
@@ -32,10 +30,6 @@ def OCR(playerRanksPath: str, playerInfoTxt: str,config, stagingRanksPath='./tem
         """ when debugging to check what pytesseract is *actually* looking at run this in cli with the 
         pre-processed image because it wont have access to these functions
         tesseract 12.png output --psm 6 -c tessedit_char_whitelist=0123456789/ -c tessedit_write_images=1 """
-
-        
-        #print({len(os.listdir('./images')) +1})
-        #print(f"./images/{len(os.listdir('./images')) +1}.png")
              
         with open(playerInfoTxt, 'a') as OCRtext:   
             OCRtext.write(imgData)
@@ -56,8 +50,8 @@ moreconfigs= ["--psm 3 --oem 3 -c tessedit_char_whitelist=0123456789/",
 
 config = '--psm 6 -c tessedit_char_whitelist=0123456789/'
 
-for i in os.listdir('./2-6 modified tests'):
-     OCR('./OCRimagesaving.png', './text.txt', config, stagingRanksPath=f'./2-6 modified tests/{i}')
+"""for i in os.listdir('./2-6 modified tests'):
+     OCR('./OCRimagesaving.png', './text.txt', config, stagingRanksPath=f'./2-6 modified tests/{i}')"""
 
 
     

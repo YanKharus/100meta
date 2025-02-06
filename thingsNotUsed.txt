@@ -1,0 +1,27 @@
+def noiseCrop(tempImagePath='./temp.png') -> None:
+    try:
+        with Image.open(tempImagePath) as z:
+                print(z.size)
+                debug = False             
+                region1 = (0, 0, 60, 355)
+                region2 = (400, 0, 589, 355)    # these values are closer to correct
+                im1 = z.crop(region2)
+                im2 = z.crop(region1)
+                result = merge(im1, im2)         # this picks up the temp image saved by ss crops it and overwrites temp 
+
+                if(debug):
+                    merge(im1, im2).show()
+                    return
+
+                result.save('./images/croptest.png') # OCR picks it up from here does what it needs and OCR will save to actual folder
+    except OSError:
+            print("something went wrong")
+
+def merge(im1: Image.Image, im2: Image.Image) -> Image.Image: # test function working with 21.png alter the values and standardize 
+      w = (im1.size[0] + im2.size[0])
+      h = max(im1.size[1], im2.size[1])
+      z = Image.new("RGBA", (w, h))      # using PIL stuff to crop out the unneeded part from the image after mss takes the ss
+      z.paste(im2)                       
+      z.paste(im1, (im2.size[0], 0))     
+
+      return z
