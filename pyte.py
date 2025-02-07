@@ -13,7 +13,7 @@ def invertBlackWhiteImageOnly(Image: Image.Image):
  #if further tests reveal accuracy is trash then read through increasing accuracy on some github somewhere and researching some of the
  #1000 config variables that can be changed 
 
-def OCR(playerRanksPath: str, playerInfoTxt: str,config, stagingRanksPath='./temp.png') -> None:  
+def OCR(playerInfoTxt: str,config, stagingRanksPath='./temp.png') -> None:  
         
         img = cv2.imread(stagingRanksPath, cv2.IMREAD_GRAYSCALE)
         _, img = cv2.threshold(img, 120, 255, cv2.THRESH_BINARY)
@@ -25,7 +25,7 @@ def OCR(playerRanksPath: str, playerInfoTxt: str,config, stagingRanksPath='./tem
         img_pil.save(f"./images/{len(os.listdir('./images')) +1}.png")
 
     
-        imgData = f"{pytesseract.image_to_string(img_pil, config=config)}\n\n"
+        imgData = f"{pytesseract.image_to_string(img_pil, config=config)}\n"
 
         """ when debugging to check what pytesseract is *actually* looking at run this in cli with the 
         pre-processed image because it wont have access to these functions
@@ -34,8 +34,7 @@ def OCR(playerRanksPath: str, playerInfoTxt: str,config, stagingRanksPath='./tem
         with open(playerInfoTxt, 'a') as OCRtext:   
             OCRtext.write(imgData)
 
-        with Image.open(stagingRanksPath) as players:      # OCR is responsible for carrying temp to final folder
-            players.save(playerRanksPath)
+        
 
 
 moreconfigs= ["--psm 3 --oem 3 -c tessedit_char_whitelist=0123456789/",
@@ -52,6 +51,11 @@ config = '--psm 6 -c tessedit_char_whitelist=0123456789/'
 
 """for i in os.listdir('./2-6 modified tests'):
      OCR('./OCRimagesaving.png', './text.txt', config, stagingRanksPath=f'./2-6 modified tests/{i}')"""
+
+
+#OCR('./text.txt', config) 
+# how OCR is currently setup and will be called. and temp image will be 
+#constantly overwritten by previous function in line saving only the pre-processed one
 
 
     

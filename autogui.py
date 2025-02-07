@@ -15,31 +15,39 @@ making sure this makes sense when its a scheduled task
 """
 
 
+def scrollDown12Times():
+     pyautogui.moveTo(500, 450, duration=1, tween=pyautogui.easeOutElastic)
+     pyautogui.click()
+     for i in range(12):
+          pyautogui.press('down')
 
 
 
 def fullTagLineLoop():
     def tagGet(namesToGet):
-        debug = 5 # set to 1 for normal speed or longer for slower
-        for i in range(namesToGet): 
-            pyautogui.moveTo(500, (i*50) + (400 if namesToGet == 11 else 800), duration=debug) # when getting last 4 names this will move the mouse    
+        debug = 0.5 # set to 1 for normal speed or longer for slower
+        for i in range(namesToGet):
+            print(i, namesToGet) 
+            pyautogui.moveTo(500, (i*40) + (450 if namesToGet == 12 else 800), duration=debug) # when getting last 4 names this will move the mouse    
             pyautogui.click(button='right')                                    # to get them
-            pyautogui.move(30, 50, duration=debug) # relative movement
+            pyautogui.move(30, (50 if (i <= 9) else -50), duration=debug) # menu goes up at limited space
             pyautogui.click()
-            pyautogui.moveTo(200, 500, duration=debug)
+            pyautogui.moveTo(300, 530, duration=1)
             pyautogui.click()
 
             clipboard_content = tkinter.Tk().clipboard_get()
-            with open('./names.txt', 'a') as nameFile:
-                nameFile.write(clipboard_content)
+            with open('./names.txt', 'a', encoding="utf-8") as nameFile:
+                nameFile.write(f"{clipboard_content}\n")
 
-            pyautogui.moveTo(600, 250, duration=debug)
+            pyautogui.moveTo(1440, 150, duration=debug)
             pyautogui.click()
         
     for i in range(8):
-        tagGet(10) 
-    else:   # 11 names and 4 names
-        tagGet(3)
+        tagGet(12) 
+        scrollDown12Times()
+    else:   # 12 names and 4 names
+        tagGet(4)
+        scrollDown12Times()
 
 
-fullTagLineLoop()
+#fullTagLineLoop()
