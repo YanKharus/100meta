@@ -25,7 +25,7 @@ def OCR(playerInfoTxt: str,config, stagingRanksPath='./temp.png') -> None:
         img_pil.save(f"./images/{len(os.listdir('./images')) +1}.png")
 
     
-        imgData = f"{pytesseract.image_to_string(img_pil, config=config)}\n"
+        imgData = f"{pytesseract.image_to_string(img_pil, config=config)}"
 
         """ when debugging to check what pytesseract is *actually* looking at run this in cli with the 
         pre-processed image because it wont have access to these functions

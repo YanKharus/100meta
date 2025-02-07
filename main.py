@@ -3,8 +3,9 @@ import os
 from PIL import Image
 import pyautogui
 import time
-""" time to build up the main loop, my excuse for doing it on main with hardcoded values is because theres like 5x
-more things going on than in the tag line full loop which took exactly 1 hour to make"""
+import pyte
+import autogui
+
 
 
 def refresh(): # apparently no refresh button anymore guess we'll see
@@ -61,6 +62,25 @@ def line1BufferFiller(mainImage='./temp.png', bufferFiller='./images/line-1-fill
 
 
 
-
 """for i in os.listdir('./2-6 tests'):
     line1BufferFiller(f'./2-6 tests/{i}')"""
+
+def mainLoop():
+    time.sleep(1)
+    for i in range(8):
+        ss()
+        line1BufferFiller()
+        pyte.OCR('./text.txt', pyte.config)
+        autogui.scrollDown12Times()
+    else:
+        autogui.boardPositionReset()
+        ss(isFinal=True)
+        line1BufferFiller(isFinal=(True))
+        pyte.OCR('./text.txt', pyte.config)
+
+    #finally
+    autogui.fullTagLineLoop()
+
+#mainLoop()
+time.sleep(1)
+autogui.boardPositionReset()

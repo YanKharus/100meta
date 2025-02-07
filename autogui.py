@@ -1,6 +1,6 @@
 import pyautogui
 import tkinter
-
+import time
 """ at this time responsible for getting player names
 how am i going to go about developing this
     I need either standardized positions or to just make up placeholders and just build up the skeleton then worry about
@@ -13,6 +13,12 @@ generating file structure
 making sure this makes sense when its a scheduled task
 
 """
+
+def boardPositionReset():
+    pyautogui.moveTo(500, 450, duration=1, tween=pyautogui.easeOutElastic)
+    pyautogui.keyDown("up")
+    time.sleep(4)
+    pyautogui.keyUp('up')
 
 
 def scrollDown12Times():
@@ -32,7 +38,7 @@ def fullTagLineLoop():
             pyautogui.click(button='right')                                    # to get them
             pyautogui.move(30, (50 if (i <= 9) else -50), duration=debug) # menu goes up at limited space
             pyautogui.click()
-            pyautogui.moveTo(300, 530, duration=1)
+            pyautogui.moveTo(300, 530, duration=2)
             pyautogui.click()
 
             clipboard_content = tkinter.Tk().clipboard_get()
