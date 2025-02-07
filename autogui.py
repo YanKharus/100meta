@@ -16,9 +16,9 @@ making sure this makes sense when its a scheduled task
 
 def boardPositionReset():
     pyautogui.moveTo(500, 450, duration=1, tween=pyautogui.easeOutElastic)
-    pyautogui.keyDown("up")
-    time.sleep(4)
-    pyautogui.keyUp('up')
+    with pyautogui.hold('up'):
+        time.sleep(4)
+    #pyautogui.keyUp('up')
 
 
 def scrollDown12Times():
